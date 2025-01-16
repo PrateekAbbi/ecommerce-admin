@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../custom ui/ImageUpload";
-import { useState } from "react";
+// import { useState } from "react";
 import toast from "react-hot-toast";
 import Delete from "../custom ui/Delete";
 
@@ -35,7 +35,7 @@ interface CollectionFormProps {
 const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,7 +60,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const url = initialData
         ? `/api/collections/${initialData._id}`
         : "/api/collections";
@@ -69,7 +69,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         body: JSON.stringify(values),
       });
       if (res.ok) {
-        setLoading(false);
+        // setLoading(false);
         toast.success(`Collection ${initialData ? "updated" : "created"}`);
         window.location.href = "/collections";
         router.push("/collections");
@@ -80,7 +80,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     }
   };
 
-  return !loading &&(
+  return (
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">

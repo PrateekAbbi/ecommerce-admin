@@ -8,29 +8,41 @@ import CollectionForm from "@/components/collections/CollectionForm";
 const CollectionDetails = ({
   params,
 }: {
-  params: { collectionId: string };
+  params: Promise<{ collectionId: string }>;
 }) => {
+  const [resolvedParams, setResolvedParams] = useState<{
+    collectionId: string;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [collectionDetails, setCollectionDetails] =
     useState<CollectionType | null>(null);
 
-  const getCollectionDetails = async () => {
-    const { collectionId } = await params;
+  useEffect(() => {
+    // Resolve the params promise
+    params.then((resolved) => {
+      setResolvedParams(resolved);
+    });
+  }, [params]);
+
+  const getCollectionDetails = async (collectionId: string) => {
     try {
       const res = await fetch(`/api/collections/${collectionId}`, {
         method: "GET",
       });
       const data = await res.json();
       setCollectionDetails(data);
-      setLoading(false);
     } catch (err) {
-      console.log("[collectionId_GET]", err);
+      console.error("[collectionId_GET]", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getCollectionDetails();
-  });
+    if (resolvedParams) {
+      getCollectionDetails(resolvedParams.collectionId);
+    }
+  }, [resolvedParams]);
 
   return loading ? (
     <Loader />
