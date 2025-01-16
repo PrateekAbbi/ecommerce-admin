@@ -5,14 +5,21 @@ import Collection from "@/lib/models/Collection";
 import { connectToDB } from "@/lib/mongoDb";
 import Product from "@/lib/models/Product";
 
+type Props = {
+  params: Promise<{
+    collectionId: string
+  }>
+}
+
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { collectionId: string } }
+  // { params }: { params: { collectionId: string } }
+  props: Props
 ) => {
   try {
     await connectToDB();
 
-    const { collectionId } = await params;
+    const { collectionId } = await props.params;
     const collection = await Collection.findById(collectionId).populate({
       path: "products",
       model: Product,
