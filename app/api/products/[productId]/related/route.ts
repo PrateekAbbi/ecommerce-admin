@@ -1,6 +1,6 @@
 import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 type Props = {
   params: Promise<{
@@ -9,6 +9,7 @@ type Props = {
 };
 
 export const GET = async (
+  req: NextRequest,
   // { params }: { params: { productId: string } }
   props: Props
 ) => {
