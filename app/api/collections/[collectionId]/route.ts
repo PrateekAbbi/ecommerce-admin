@@ -41,7 +41,8 @@ export const GET = async (
 
 export const POST = async (
   req: NextRequest,
-  { params }: { params: { collectionId: string } }
+  // { params }: { params: { collectionId: string } }
+  props: Props
 ) => {
   try {
     const { userId } = getAuth(req);
@@ -52,7 +53,7 @@ export const POST = async (
 
     await connectToDB();
 
-    const { collectionId } = await params;
+    const { collectionId } = await props.params;
     let collection = await Collection.findById(collectionId);
 
     if (!collection) {
@@ -82,7 +83,8 @@ export const POST = async (
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { collectionId: string } }
+  // { params }: { params: { collectionId: string } }
+  props: Props
 ) => {
   try {
     const { userId } = getAuth(req);
@@ -93,7 +95,7 @@ export const DELETE = async (
 
     await connectToDB();
 
-    const { collectionId } = await params;
+    const { collectionId } = await props.params;
     await Collection.findByIdAndDelete(collectionId);
 
     await Product.updateMany(
