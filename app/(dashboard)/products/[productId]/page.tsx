@@ -27,7 +27,7 @@ const ProductDetails = ({ params }: { params: { productId: string } }) => {
 
   useEffect(() => {
     getProductDetails();
-  }, []);
+  });
 
   return loading ? <Loader /> : <ProductForm initialData={productDetails} />;
 };

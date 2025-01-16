@@ -44,7 +44,7 @@ const Delete: React.FC<DeleteProps> = ({ item, id }) => {
       toast.error("Something went wrong! Please try again.")
     }
   }
-  return (
+  return !loading && (
     <AlertDialog>
       <AlertDialogTrigger>
         <div className="bg-red-1 text-white inline-flex items-center justify-center rounded-md p-2 cursor-pointer">

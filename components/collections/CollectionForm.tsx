@@ -21,7 +21,6 @@ import ImageUpload from "../custom ui/ImageUpload";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Delete from "../custom ui/Delete";
-import Loader from "../custom ui/Loader";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -81,7 +80,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
     }
   };
 
-  return (
+  return !loading &&(
     <div className="p-10">
       {initialData ? (
         <div className="flex items-center justify-between">

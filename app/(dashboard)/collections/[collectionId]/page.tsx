@@ -30,7 +30,7 @@ const CollectionDetails = ({
 
   useEffect(() => {
     getCollectionDetails();
-  }, []);
+  });
 
   return loading ? (
     <Loader />
