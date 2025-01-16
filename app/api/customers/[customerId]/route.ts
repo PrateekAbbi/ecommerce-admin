@@ -23,7 +23,14 @@ export const GET = async (
       customerClerkId: customerId,
     }).populate({ path: "products.product", model: Product });
 
-    return NextResponse.json(orders, { status: 200 });
+    return NextResponse.json(orders, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": `${process.env.ECOMMERCE_STORE_URL}`,
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
   } catch (error) {
     console.log("[customerId_GET]", error);
     return new NextResponse("Internal server error", { status: 500 });
