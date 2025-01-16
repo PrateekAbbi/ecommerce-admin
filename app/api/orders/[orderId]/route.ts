@@ -35,7 +35,17 @@ export const GET = async (
       clerkId: orderDetails.customerClerkId,
     });
 
-    return NextResponse.json({ orderDetails, customer }, { status: 200 });
+    return NextResponse.json(
+      { orderDetails, customer },
+      {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": `${process.env.ECOMMERCE_STORE_URL}`,
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      }
+    );
   } catch (error) {
     console.log("[orderId_GET]", error);
     return new NextResponse("Internal server error", { status: 500 });
