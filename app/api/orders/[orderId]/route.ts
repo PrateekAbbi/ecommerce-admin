@@ -4,14 +4,21 @@ import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDb";
 import { NextRequest, NextResponse } from "next/server";
 
+type Props = {
+  params: Promise<{
+    orderId: string;
+  }>;
+};
+
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  // { params }: { params: { orderId: string } }
+  props: Props
 ) => {
   try {
     await connectToDB();
 
-    const { orderId } = await params;
+    const { orderId } = await props.params;
 
     const orderDetails = await Order.findById(orderId).populate({
       path: "products.product",

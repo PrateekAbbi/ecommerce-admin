@@ -5,14 +5,21 @@ import { getAuth } from "@clerk/nextjs/server";
 
 import { NextRequest, NextResponse } from "next/server";
 
+type Props = {
+  params: Promise<{
+    productId: string;
+  }>;
+};
+
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { productId: string } }
+  // { params }: { params: { productId: string } }
+  props: Props
 ) => {
   try {
     await connectToDB();
 
-    const { productId } = await params;
+    const { productId } = await props.params;
 
     const product = await Product.findById(productId).populate({
       path: "collections",
@@ -42,7 +49,8 @@ export const GET = async (
 
 export const POST = async (
   req: NextRequest,
-  { params }: { params: { productId: string } }
+  // { params }: { params: { productId: string } }
+  props: Props
 ) => {
   try {
     const { userId } = getAuth(req);
@@ -53,7 +61,7 @@ export const POST = async (
 
     await connectToDB();
 
-    const { productId } = await params;
+    const { productId } = await props.params;
     const product = await Product.findById(productId);
 
     if (!product) {
@@ -132,7 +140,8 @@ export const POST = async (
 
 export const DELETE = async (
   req: NextRequest,
-  { params }: { params: { productId: string } }
+  // { params }: { params: { productId: string } }
+  props: Props
 ) => {
   try {
     const { userId } = getAuth(req);
@@ -143,7 +152,7 @@ export const DELETE = async (
 
     await connectToDB();
 
-    const { productId } = await params;
+    const { productId } = await props.params;
     const product = await Product.findById(productId);
 
     if (!product) {

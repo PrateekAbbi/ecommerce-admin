@@ -3,14 +3,21 @@ import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDb";
 import { NextRequest, NextResponse } from "next/server";
 
+type Props = {
+  params: Promise<{
+    customerId: string;
+  }>;
+};
+
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { customerId: string } }
+  // { params }: { params: { customerId: string } }
+  props: Props
 ) => {
   try {
     await connectToDB();
 
-    const { customerId } = await params;
+    const { customerId } = await props.params;
 
     const orders = await Order.find({
       customerClerkId: customerId,

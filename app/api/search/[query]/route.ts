@@ -2,13 +2,20 @@ import Product from "@/lib/models/Product";
 import { connectToDB } from "@/lib/mongoDb";
 import { NextRequest, NextResponse } from "next/server";
 
+type Props = {
+  params: Promise<{
+    query: string;
+  }>;
+};
+
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { query: string } }
+  // { params }: { params: { query: string } }
+  props: Props
 ) => {
   try {
     await connectToDB();
-    const { query } = await params;
+    const { query } = await props.params;
 
     const searchedProducts = await Product.find({
       $or: [
